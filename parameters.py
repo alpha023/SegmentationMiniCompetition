@@ -1,14 +1,12 @@
 # parameters.py
 
-import torch
-
 # ---------------- DATA ----------------
 IMAGE_SIZE = 300
 BATCH_SIZE = 8
 NUM_WORKERS = 2
 
 # ---------------- TRAINING ----------------
-EPOCHS = 5
+EPOCHS = 10
 LEARNING_RATE = 3e-4
 
 # ---------------- MODEL ----------------

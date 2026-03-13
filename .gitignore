@@ -1,2 +1,5 @@
 /dataset
 /group7_output
+/.venv
+/seg_env
+/__pycache__

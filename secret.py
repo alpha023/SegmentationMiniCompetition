@@ -1,13 +1,13 @@
 import torch
 from thop import profile
-from model import LightSegNet
+from model import LightSegNet_V3
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 def compute_flops_from_saved(model_path):
 
-    model = LightSegNet().to(DEVICE)
+    model = LightSegNet_V3().to(DEVICE)
 
     model.load_state_dict(torch.load(model_path, map_location=DEVICE))
 

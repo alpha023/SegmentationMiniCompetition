@@ -3,7 +3,7 @@ import torchvision.transforms as T
 from torch.utils.data import DataLoader, random_split
 
 from dataset import VOCDataset
-from model import LightSegNet
+from model import LightSegNet_V3
 from utils import dice_score,DiceLoss
 from early_stopping import EarlyStopping
 
@@ -11,6 +11,7 @@ from secret import compute_flops, ranking_score
 from parameters import *
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+print("Using device:", DEVICE)
 
 image_transform = T.Compose([
     T.Resize((320,320)),
@@ -45,7 +46,7 @@ train_dataset, val_dataset = random_split(dataset,[train_size,val_size])
 train_loader = DataLoader(train_dataset,batch_size=BATCH_SIZE,shuffle=True)
 val_loader = DataLoader(val_dataset,batch_size=BATCH_SIZE)
 
-model = LightSegNet().to(DEVICE)
+model = LightSegNet_V3().to(DEVICE)
 flops_giga, params = compute_flops(model, device=DEVICE)
 early_stopping = EarlyStopping(PATIENCE)
 
@@ -112,11 +113,7 @@ for epoch in range(EPOCHS):
 
     current_lr = optimizer.param_groups[0]['lr']
 
-    print(f"Epoch {epoch+1}/{EPOCHS}")
-    print(f"Train Loss: {avg_loss:.4f}")
-    print(f"Validation Dice: {avg_dice:.4f}")
-    print(f"Learning Rate: {current_lr:.6f}")
-    print("----------------------------------")
+    print(f"Epoch [{epoch+1}/{EPOCHS}] | Train Loss: {avg_loss:.4f} | Val Dice: {avg_dice:.4f} | LR: {current_lr:.6f}")
     early_stopping(avg_dice, model)
 
     if early_stopping.early_stop:
