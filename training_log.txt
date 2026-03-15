@@ -1,0 +1,1 @@
+Epoch [15/100] | Train Loss: 0.6084 | Train Dice: 0.5730 | Val Dice: 0.3265 | LR: 0.000284

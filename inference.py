@@ -5,7 +5,7 @@ import numpy as np
 from PIL import Image
 import torchvision.transforms as T
 
-from model import LightSegNet
+from model import LightweightUNet
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
@@ -16,9 +16,9 @@ transform = T.Compose([
 
 def run_inference(test_folder, group_number):
 
-    model = LightSegNet().to(DEVICE)
+    model = LightweightUNet().to(DEVICE)
 
-    model.load_state_dict(torch.load("model.pth",map_location=DEVICE),strict=False)
+    model.load_state_dict(torch.load("best_model.pth",map_location=DEVICE),strict=False)
 
     model.eval()
 
